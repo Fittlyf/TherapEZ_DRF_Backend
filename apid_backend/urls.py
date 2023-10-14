@@ -1,7 +1,12 @@
+import os
 from django.urls import path, include
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
+from django.contrib.staticfiles.views import serve
+from django.http import FileResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.routers import DefaultRouter
 from . import views
 
@@ -13,6 +18,18 @@ from condition import views as condition_views
 from exercise import views as exercise_views
 from exerciserecord import views as exercise_records_views
 from patient_exercise import views as patient_exercise_views
+
+class FileView(APIView):
+    def get(self, request):
+        file_path = '00A8318462DA1B58A814B2B69079FAF6.txt'  # Update with your file path
+        file_path = os.path.join(settings.MEDIA_ROOT, file_path)
+
+        if os.path.exists(file_path):
+            file = open(file_path, 'rb')
+            response = FileResponse(file)
+            return response
+        else:
+            return Response({'error': 'File not found'}, status=404)
 
 router = DefaultRouter()
 router.register('user', user_views.UserModelViewSet, basename='user')
@@ -38,4 +55,5 @@ urlpatterns = [
     path('auth/', user_views.CustomObtainAuthToken.as_view()),
     path('get-aws-server-data/', views.git_push_view, name='get-aws-server-data'),
     path('update-aws-server/', views.git_pull_view, name='update-aws-server'),
+    path('.well-known/pki-validation/00A8318462DA1B58A814B2B69079FAF6.txt/', FileView.as_view(), name='file-view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
