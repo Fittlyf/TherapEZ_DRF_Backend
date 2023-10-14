@@ -61,7 +61,7 @@ class PatientViewSet(viewsets.ModelViewSet):
             user = User.objects.create_user(**user_data)
 
             # Calculate the default prompt_review value (2 days after user's date joined)
-            prompt_review_default = user.date_joined + timedelta(days=2)
+            prompt_review_default = (user.date_joined + timedelta(days=2)).date()
 
             # Create a new patient object
             patient = Patient.objects.create(
@@ -69,7 +69,7 @@ class PatientViewSet(viewsets.ModelViewSet):
                 doctor_id=doctor_id,
                 condition_id=condition_id,
                 duration=duration,
-                prompt_review=prompt_review_default,
+                prompt_review=prompt_review_default
             )
 
             # Create a new token object
