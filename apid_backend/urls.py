@@ -32,6 +32,9 @@ class FileView(APIView):
             return Response({'error': 'File not found'}, status=404)
         
 class ServiceWorkerView(APIView):
+    authentication_classes = []
+    permission_classes = [] 
+
     def get(self, request):
         file_path = 'background-worker.js'
         file_path = os.path.join(settings.MEDIA_ROOT, file_path)
