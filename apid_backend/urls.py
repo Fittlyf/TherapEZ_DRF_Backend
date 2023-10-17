@@ -30,6 +30,18 @@ class FileView(APIView):
             return response
         else:
             return Response({'error': 'File not found'}, status=404)
+        
+class ServiceWorkerView(APIView):
+    def get(self, request):
+        file_path = 'background-worker.js'
+        file_path = os.path.join(settings.MEDIA_ROOT, file_path)
+
+        if os.path.exists(file_path):
+            file = open(file_path, 'rb')
+            response = FileResponse(file)
+            return response
+        else:
+            return Response({'error': 'File not found'}, status=404)
 
 router = DefaultRouter()
 router.register('user', user_views.UserModelViewSet, basename='user')
@@ -56,4 +68,5 @@ urlpatterns = [
     path('get-aws-server-data/', views.git_push_view, name='get-aws-server-data'),
     path('update-aws-server/', views.git_pull_view, name='update-aws-server'),
     path('.well-known/pki-validation/00A8318462DA1B58A814B2B69079FAF6.txt/', FileView.as_view(), name='file-view'),
+    path('background-worker.js/', ServiceWorkerView.as_view(), name='service-worker-view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
