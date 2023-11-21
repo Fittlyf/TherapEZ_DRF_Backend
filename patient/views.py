@@ -105,12 +105,8 @@ class ActivePatientViewSet(viewsets.ModelViewSet):
             )
         )
 
-        custom_queryset = []
-
-        for patient in queryset:
-            if patient.user.date_joined.date() > today - timedelta(
-                days=patient.duration_days
-            ):
-                custom_queryset.append(patient)
+        # Filter the queryset based on the condition
+        custom_queryset = queryset.filter(doctor__user__id=self.request.user.id, user__date_joined__date__gt=today - F("duration_days"))
 
         return custom_queryset
+
