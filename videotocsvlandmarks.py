@@ -3,7 +3,7 @@ import mediapipe as mp
 import csv
 import json  # Add this line to import the json module
 
-video_path = './curl.mp4'
+video_path = './sample9.mp4'
 output_csv = './output.csv'
 output_json = './output.json' 
 
