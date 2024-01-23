@@ -3,9 +3,9 @@ import mediapipe as mp
 import csv
 import json  # Add this line to import the json module
 
-video_path = './sample9.mp4'
+video_path = './arthritis9.mp4'
 output_csv = './output.csv'
-output_json = './output.json' 
+output_json = './arthritis9.json' 
 
 def write_landmarks_to_csv_and_json(landmarks, frame_number, csv_writer, json_data):
     frame_data = {"frame_number": frame_number, "pose_landmarks": []}
