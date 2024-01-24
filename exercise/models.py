@@ -1,6 +1,6 @@
 from django.db import models
-from exercise.process_video import process_video_and_write_to_json
-import os
+# from exercise.process_video import process_video_and_write_to_json
+# import os
 
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
