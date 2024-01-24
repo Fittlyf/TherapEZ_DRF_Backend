@@ -21,7 +21,7 @@ from patient_exercise import views as patient_exercise_views
 
 class FileView(APIView):
     def get(self, request):
-        file_path = '00A8318462DA1B58A814B2B69079FAF6.txt'  # Update with your file path
+        file_path = 'A3524744E284D2166470EDD99074774E.txt'  # Update with your file path
         file_path = os.path.join(settings.MEDIA_ROOT, file_path)
 
         if os.path.exists(file_path):
@@ -70,6 +70,6 @@ urlpatterns = [
     path('auth/', user_views.CustomObtainAuthToken.as_view()),
     path('get-aws-server-data/', views.git_push_view, name='get-aws-server-data'),
     path('update-aws-server/', views.git_pull_view, name='update-aws-server'),
-    path('.well-known/pki-validation/00A8318462DA1B58A814B2B69079FAF6.txt/', FileView.as_view(), name='file-view'),
+    path('.well-known/pki-validation/A3524744E284D2166470EDD99074774E.txt/', FileView.as_view(), name='file-view'),
     path('background-worker.js/', ServiceWorkerView.as_view(), name='service-worker-view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
