@@ -19,6 +19,8 @@ class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
+
+        print(token)
         
         user = token.user
         user_type = None
@@ -35,5 +37,6 @@ class CustomObtainAuthToken(ObtainAuthToken):
             user_type = 'fittlyf_physio'
             
         response.data['user_type'] = user_type
+        response.data['token'] = str(token)
         
         return response
